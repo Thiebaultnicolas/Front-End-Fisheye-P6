@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: "off" */
 class Media {
   /**
    * Constructeur de la classe Media
@@ -36,6 +37,7 @@ class MediaImage {
    */
   getMediaDOM() {
     const image = document.createElement("img");
+    image.setAttribute('alt', this.media.title)
     image.setAttribute(
       "src",
       `assets/media/${this.media.photographerId}/${this.media.image}`

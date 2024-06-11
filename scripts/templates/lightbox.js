@@ -1,7 +1,10 @@
+/* eslint no-unused-vars: "off" */
+/* global Media */
 class Lightbox {
-  constructor() {
+  constructor(nbSlides) {
     this.initEvents();
     this.index = 0;
+    this.nbSlides = nbSlides
   }
   /**
    * Initialisation des événements pour la lightbox
@@ -9,12 +12,12 @@ class Lightbox {
   initEvents() {
     const btnPrev = document.querySelector(".btn.prev");
     const btnNext = document.querySelector(".btn.next");
-    const slides = document.querySelectorAll(".slide");
     const carousel = document.querySelector(".carousel");
     const overlay = document.querySelector(".overlay");
+    const closeLightboxButton = document.querySelector('.close-lightbox-modal')
 
     btnNext.addEventListener("click", () => {
-      if (this.index == slides.length - 1) {
+      if (this.index == this.nbSlides - 1) {
         this.index = 0;
       } else {
         this.index += 1;
@@ -24,7 +27,7 @@ class Lightbox {
 
     btnPrev.addEventListener("click", () => {
       if (this.index == 0) {
-        this.index = slides.length - 1;
+        this.index = this.nbSlides - 1;
       } else {
         this.index -= 1;
       }
@@ -34,6 +37,8 @@ class Lightbox {
     overlay.addEventListener("click", () => {
       this.close();
     });
+
+    closeLightboxButton.addEventListener('click', () => this.close())
 
     document.addEventListener("keydown", (event) => {
       if (carousel.style.display === "flex") {

@@ -1,3 +1,4 @@
+/* global photographerTemplate */
 /**
  * Fonction qui permet de récupérer la liste des photographes
  * @returns {Promise}

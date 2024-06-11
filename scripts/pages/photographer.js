@@ -1,7 +1,4 @@
-// On récupère l'id du photographe en query de la requête
-let params = new URL(document.location.toString()).searchParams;
-let id = parseInt(params.get("id"));
-
+/* global Media, Lightbox, totalLikes */
 
 let maxLikes = 0;
 let media = [];
@@ -246,8 +243,6 @@ function closeModalOnEscape(event) {
  * Initialiser les évènements de la modal de contact
  */
 function initEventContactModal() {
-  const modal = document.getElementById("contact_modal");
-
   // Ajoutez un écouteur d'événements sur le bouton "Contactez-moi"
   const contactButton = document.querySelector(".contact_button");  
   contactButton.addEventListener("click", showContactModal);
@@ -261,10 +256,8 @@ function initEventContactModal() {
 
   // Ajouter un gestionnaire d'événements pour la touche "Entrée" sur la croix de fermeture
   const closeButton = document.querySelector('.close-contact-modal');
-  closeButton.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
+  closeButton.addEventListener("click", () => {
       hideContactModal();
-    }
   });
 
   // Au click sur l'overlay, permet de fermer la modale
@@ -330,7 +323,7 @@ const init = async () => {
 
   // On récupère les médias du photographe
   media = await fetchMedia(parseInt(id));
-  lightbox = new Lightbox();
+  lightbox = new Lightbox(media.length);
   initSortEvent()
   sortMedia("popularity");
   displayGallery(media);
