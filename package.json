@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "doc": "jsdoc scripts/**/*.js"
+    "doc": "jsdoc scripts/**/*.js",
+    "eslint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,9 @@
   },
   "homepage": "https://github.com/Thiebaultnicolas/Front-End-Fisheye-P6#readme",
   "devDependencies": {
-    "eslint": "^9.5.0",
+    "@eslint/js": "^9.4.0",
+    "eslint": "^9.4.0",
+    "globals": "^15.4.0",
     "jsdoc": "^4.0.3"
   }
 }

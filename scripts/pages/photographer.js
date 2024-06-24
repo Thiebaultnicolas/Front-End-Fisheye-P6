@@ -53,7 +53,7 @@ const displayPhotographerInfo = (photographer) => {
 
   const img = document.createElement("img");
   img.src = `assets/photographers/${photographer.portrait}`;
-  img.alt = photographer.name;
+  img.alt = `Portrait de ${photographer.name}`;
   header.appendChild(img);
 };
 
