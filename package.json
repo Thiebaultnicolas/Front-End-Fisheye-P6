@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Thiebaultnicolas/Front-End-Fisheye-P6#readme",
   "devDependencies": {
+    "eslint": "^9.5.0",
     "jsdoc": "^4.0.3"
   }
 }
