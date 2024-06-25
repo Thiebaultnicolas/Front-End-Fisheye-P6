@@ -174,12 +174,12 @@ class Lightbox {
     const lastElement = focusableElements[focusableElements.length - 1];
 
     if (event.key === "Tab") {
-      if (event.shiftKey) { // Tab + Shift moves focus backwards
+      if (event.shiftKey) { 
         if (document.activeElement === firstElement) {
           event.preventDefault();
           lastElement.focus();
         }
-      } else { // Tab moves focus forward
+      } else { 
         if (document.activeElement === lastElement) {
           event.preventDefault();
           firstElement.focus();
