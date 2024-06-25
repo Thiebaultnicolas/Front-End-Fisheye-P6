@@ -206,16 +206,14 @@ function displayModal(photographer) {
   testDiv.appendChild(photographerNameElement);
 }
 
-
 /**
  * Fonction qui permet d'afficher la modal de contact
  */
 function showContactModal() {
   const modal = document.getElementById("contact_modal");
-  const form = document.querySelector('#contact-form')  
-  // Afficher la modal
+  const form = document.querySelector('#contact-form');
   modal.style.display = "block";
-  form.first_name.focus(); // Focus le premier champs du formulaire
+  form.first_name.focus(); // Focus le premier champ du formulaire
 }
 
 /**
@@ -223,10 +221,9 @@ function showContactModal() {
  */
 function hideContactModal() {
   const modal = document.getElementById("contact_modal");
-  const contactButton = document.querySelector('.contact_button')
-  modal.style.display = "none"; 
-
-  contactButton.focus() //Permet de remettre le focus sur le bouton contact afin de permettre la suite de la navigation
+  const contactButton = document.querySelector('.contact_button');
+  modal.style.display = "none";
+  contactButton.focus(); // Remet le focus sur le bouton contact
 }
 
 /**
@@ -243,28 +240,22 @@ function closeModalOnEscape(event) {
  * Initialiser les évènements de la modal de contact
  */
 function initEventContactModal() {
-  // Ajoutez un écouteur d'événements sur le bouton "Contactez-moi"
   const contactButton = document.querySelector(".contact_button");  
   contactButton.addEventListener("click", showContactModal);
 
-
-  // Ajouter un écouteur d'événements pour fermer la modal lorsque la touche Échap est pressée
   document.addEventListener("keydown", closeModalOnEscape);
 
-  // Mettre le focus sur le champ "Prénom"
-  document.getElementById("first_name").focus();
-
-  // Ajouter un gestionnaire d'événements pour la touche "Entrée" sur la croix de fermeture
   const closeButton = document.querySelector('.close-contact-modal');
-  closeButton.addEventListener("click", () => {
+  closeButton.setAttribute('tabindex', '0'); // Rendre le bouton focusable
+  closeButton.addEventListener("click", hideContactModal);
+  closeButton.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
       hideContactModal();
+    }
   });
 
-  // Au click sur l'overlay, permet de fermer la modale
-  const contactOverlay = document.querySelector('.contact-overlay')
-  contactOverlay.addEventListener('click', () => {
-    hideContactModal()
-  })
+  const contactOverlay = document.querySelector('.contact-overlay');
+  contactOverlay.addEventListener('click', hideContactModal);
 
   const contactForm = document.querySelector("#contact-form");
   contactForm.addEventListener("submit", (e) => {
@@ -273,13 +264,36 @@ function initEventContactModal() {
     console.log("Last Name: ", e.target.last_name.value);
     console.log("Email: ", e.target.email.value);
     console.log("Message: ", e.target.message.value);
-    contactForm.reset()
-    hideContactModal()
+    contactForm.reset();
+    hideContactModal();
   });
+
+  // Focus trapping
+  const modal = document.getElementById("contact_modal");
+  modal.addEventListener("keydown", trapFocus.bind(this));
+
+  function trapFocus(event) {
+    const focusableElements = modal.querySelectorAll(
+      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.key === "Tab") {
+      if (event.shiftKey) { // Tab + Shift moves focus backwards
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else { // Tab moves focus forward
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+  }
 }
-
-
-
 
 /**
  * Trier le tableau de media en fonction de la valeur donnée
@@ -299,7 +313,7 @@ const sortMedia = (value) => {
  * Fonction permettant d'initialiser les évènements du tri
  */
 const initSortEvent = () => {
-    // Écouteur d'événements pour le menu déroulant, triant et mettant à jour
+  // Écouteur d'événements pour le menu déroulant, triant et mettant à jour
   // la galerie en fonction du critère sélectionné (popularité, titre, date).
   document.getElementById("sorting").addEventListener("change", function () {
     sortMedia(this.value);
@@ -318,13 +332,13 @@ const init = async () => {
   // On récupère d'abord les infos du photographe
   const photographer = await fetchPhotographer(parseInt(id));
   displayPhotographerInfo(photographer);
-  displayModal(photographer)
-  initEventContactModal()
+  displayModal(photographer);
+  initEventContactModal();
 
   // On récupère les médias du photographe
   media = await fetchMedia(parseInt(id));
   lightbox = new Lightbox(media.length);
-  initSortEvent()
+  initSortEvent();
   sortMedia("popularity");
   displayGallery(media);
 
@@ -334,6 +348,6 @@ const init = async () => {
 };
 
 /**
- *Appelle la fonction d'initialisation
+ * Appelle la fonction d'initialisation
  */
 init();

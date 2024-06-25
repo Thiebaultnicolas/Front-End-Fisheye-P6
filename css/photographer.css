@@ -275,7 +275,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #d3573c; /* Couleur de fond de la modal */
+  background-color:  #DB8876; /* Couleur de fond de la modal */
   padding: 20px;
   border-radius: 10px;
   width: 50%;
@@ -387,8 +387,7 @@
 
 .carousel .slide img {
   max-width: 50%;
-  height: auto;
-  height: 70%;
+  height: 43%;
   object-fit: cover;
 }
 

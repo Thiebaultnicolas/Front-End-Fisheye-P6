@@ -14,7 +14,7 @@ class Media {
   }
   /**
    * Méthode pour obtenir l'élément DOM du média
-   * @returns {HTMLElement} - L'élément DOM du média
+   * @returns {HTMLElement} - L'élément DOM du média 
    */
   getMediaDOM() {
     return this.media.getMediaDOM();
